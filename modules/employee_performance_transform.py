@@ -15,7 +15,7 @@ NUMERICAL_FEATURES = [
 
 LABEL_KEY = "Performance Score"
 
-def transform_name(key):
+def transformed_name(key):
     """Renaming transformed features"""
     return key + "_xf"
 
