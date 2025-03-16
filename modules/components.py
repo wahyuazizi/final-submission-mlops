@@ -9,7 +9,7 @@ from tfx.components import (
     StatisticsGen,
     SchemaGen,
     ExampleValidator,
-    Transfrom,
+    Transform,
     Trainer,
     Evaluator,
     Tuner,
