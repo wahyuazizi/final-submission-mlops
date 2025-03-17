@@ -12,9 +12,12 @@ PIPELINE_NAME = "wahyuazizi-pipeline"
 DATA_ROOT = "data"
 TRANSFORM_MODULE_FILE = "modules/employee_performance_transform.py"
 TRAINER_MODULE_FILE = "modules/employee_performance_trainer.py"
+TUNER_MODULE_FILE = "modules/employee_performance_tuner.py"
+
+# Requirement_file = os.path.join(root, "requirements.txt")
 
 # Pipeline outputs
-OUTPUT_BASE = "outputs"
+OUTPUT_BASE = "output"
 serving_model_dir = os.path.join(OUTPUT_BASE, "serving_model")
 pipeline_root = os.path.join(OUTPUT_BASE, PIPELINE_NAME)
 metadata_path = os.path.join(pipeline_root, "metadata.sqlite")
@@ -26,7 +29,7 @@ def init_local_pipeline(
     beam_args = [
         "--direct_running_mode=multi_processing"
         # 0 auto-detect based on the number of CPUs available
-        # during execution time
+        # during execution time.
         "---direct_num_workers=0"
     ]
 
@@ -38,18 +41,19 @@ def init_local_pipeline(
         metadata_connection_config=metadata.sqlite_metadata_connection_config(
             metadata_path
         ),
-        beam_pipeline_args=beam_args
+        eam_pipeline_args=beam_args
     )
 
-if __name__=="__main__":
+if __name__ == "__main__":
     logging.set_verbosity(logging.INFO)
 
     from modules.components import init_components
 
     components = init_components(
-        DATA_ROOT, 
+        DATA_ROOT,
         training_module=TRAINER_MODULE_FILE,
         transform_module=TRANSFORM_MODULE_FILE,
+        tuning_module=TUNER_MODULE_FILE,
         training_steps=5000,
         eval_steps=1000,
         serving_model_dir=serving_model_dir,
