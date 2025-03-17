@@ -31,13 +31,16 @@ def transformed_name(key):
     return key + "_xf"
 
 
-def convert_num_to_one_hot(label_tensor, num_labels=2):
+def convert_num_to_one_hot(label_tensor, num_labels=4):
     """
-    Convert a label (0 or 1) into a one hot vector
+    Convert a label into a one-hot vector.
+    
     Args:
-        int: label_tensor (0 or 1)
+        label_tensor: Tensor berisi label dalam bentuk angka (0, 1, 2, 3)
+        num_labels: Jumlah unik kelas (default: 4)
+    
     Returns:
-        label_tensor
+        One-hot encoded tensor dengan shape [-1, num_labels]
     """
 
     one_hot_tensor = tf.one_hot(label_tensor, num_labels)
