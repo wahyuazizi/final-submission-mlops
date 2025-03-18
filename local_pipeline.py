@@ -9,7 +9,7 @@ from tfx.orchestration.beam.beam_dag_runner import BeamDagRunner
 PIPELINE_NAME = "wahyuazizi-pipeline"
 
 # Pipeline inputs
-DATA_ROOT = "data/cleaned"
+DATA_ROOT = "data"
 TRANSFORM_MODULE_FILE = "modules/employee_performance_transform.py"
 TRAINER_MODULE_FILE = "modules/employee_performance_trainer.py"
 TUNER_MODULE_FILE = "modules/employee_performance_tuner.py"
