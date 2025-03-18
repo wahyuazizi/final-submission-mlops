@@ -2,6 +2,7 @@ import tensorflow as tf
 import tensorflow_transform as tft
 
 CATEGORICAL_FEATURES = {
+    "BusinessUnit": 10,
     "EmployeeStatus": 2,
     "EmployeeType": 3,
     "PayZone": 3,

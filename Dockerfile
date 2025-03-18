@@ -10,9 +10,6 @@ ENV MODEL_BASE_PATH=/models
 ENV MONITORING_CONFIG="/model_config/prometheus.config"
 ENV PORT=8501
 
-# Expose ports for monitoring & API access
-EXPOSE 8500 8501
-
 # Create entrypoint script
 RUN echo '#!/bin/bash \n\n\
 set -e \n\

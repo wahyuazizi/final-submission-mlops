@@ -1,5 +1,0 @@
-# Gunakan image Grafana resmi
-FROM grafana/grafana-enterprise
-
-# Expose port untuk akses Grafana
-EXPOSE 3000
