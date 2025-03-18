@@ -48,8 +48,9 @@ def input_fn(
 
 
 def model_builder(hp):
-    num_layer = hp.Int("num_layer", min_value=1, max_value=5, step=1)
-    fc_units = hp.Int("fc_units", min_value=16, max_value=256, step=16)
+    # num_layer = hp.Int("num_layer", min_value=1, max_value=5, step=1)
+    # dropout_rate = hp.Float("dropout_rate", min_value=0.1, max_value=0.5, step=0.1)
+    fc_units = hp.Int("fc_units", min_value=16, max_value=64, step=16)
     lr = hp.Choice("lr", values=[1e-2, 1e-3, 1e-4])
 
     input_features = []
@@ -65,11 +66,12 @@ def model_builder(hp):
 
     concat = tf.keras.layers.concatenate(input_features)
     x = tf.keras.layers.Dense(256, activation='relu')(concat)
-    for _ in range(num_layer):
-        x = tf.keras.layers.Dense(fc_units, activation="relu")(x)
+    x = tf.keras.layers.Dense(fc_units, activation="relu")(x)
+    x = tf.keras.layers.Dense(fc_units, activation="relu")(x)
 
     x = tf.keras.layers.Dropout(0.2)(x)
     outputs = tf.keras.layers.Dense(4, activation='softmax')(x)
+    
 
     model = tf.keras.Model(inputs=input_features, outputs=outputs)
     model.compile(
@@ -98,7 +100,7 @@ def tuner_fn(fn_args):
     tuner = kt.Hyperband(
         lambda hp: model_builder(hp),
         objective="val_sparse_categorical_accuracy",
-        max_epochs=20,
+        max_epochs=25,
         factor=3,
         directory=fn_args.working_dir,
         project_name="kt_hyperband"

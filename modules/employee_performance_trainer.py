@@ -31,8 +31,8 @@ def get_model(hp, show_summary=True):
 
     concat = tf.keras.layers.concatenate(input_features)
     x = tf.keras.layers.Dense(256, activation='relu')(concat)
-    for _ in range(hp.get("num_layer")):
-        x = tf.keras.layers.Dense(hp.get("fc_units"), activation="relu")(x)
+    x = tf.keras.layers.Dense(hp.get("fc_units"), activation="relu")(x)
+    x = tf.keras.layers.Dense(hp.get("fc_units"), activation="relu")(x)
     x = tf.keras.layers.Dropout(0.2)(x)
     outputs = tf.keras.layers.Dense(4, activation='softmax')(x)
 
