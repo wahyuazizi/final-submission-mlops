@@ -14,12 +14,13 @@ from modules.employee_performance_transform import (
 
 epochs = 10
 
-TunerFnResult = NamedTuple(
-    "TunerFnResult", [("tuner", base_tuner.BaseTuner), ("fit_kwargs", Dict[Text, Any])]
-)
+TunerFnResult = NamedTuple("TunerFnResult", [(
+    "tuner", base_tuner.BaseTuner), ("fit_kwargs", Dict[Text, Any])])
+
 
 def gzip_reader_fn(filenames):
     return tf.data.TFRecordDataset(filenames, compression_type='GZIP')
+
 
 def input_fn(
         file_pattern,
@@ -27,7 +28,7 @@ def input_fn(
         num_epochs,
         batch_size=64
 ) -> tf.data.Dataset:
-    
+
     # Get post_transform feature spec
     transform_feature_spec = (
         tf_transform_output.transformed_feature_spec().copy()
@@ -44,6 +45,7 @@ def input_fn(
     ).repeat(64)
 
     return dataset
+
 
 def model_builder(hp):
     num_layer = hp.Int("num_layer", min_value=1, max_value=5, step=1)
@@ -65,7 +67,7 @@ def model_builder(hp):
     x = tf.keras.layers.Dense(256, activation='relu')(concat)
     for _ in range(num_layer):
         x = tf.keras.layers.Dense(fc_units, activation="relu")(x)
-    
+
     x = tf.keras.layers.Dropout(0.2)(x)
     outputs = tf.keras.layers.Dense(4, activation='softmax')(x)
 
@@ -79,6 +81,7 @@ def model_builder(hp):
     model.summary()
 
     return model
+
 
 def tuner_fn(fn_args):
     tf_transform_output = tft.TFTransformOutput(fn_args.transform_graph_path)
@@ -94,11 +97,11 @@ def tuner_fn(fn_args):
 
     tuner = kt.Hyperband(
         lambda hp: model_builder(hp),
-        objective = "val_sparse_categorical_accuracy",
-        max_epochs = 20,
+        objective="val_sparse_categorical_accuracy",
+        max_epochs=20,
         factor=3,
-        directory = fn_args.working_dir,
-        project_name = "kt_hyperband"
+        directory=fn_args.working_dir,
+        project_name="kt_hyperband"
     )
 
     return TunerFnResult(

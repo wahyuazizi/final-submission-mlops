@@ -27,6 +27,7 @@ NUMERICAL_FEATURES = [
 
 LABEL_KEY = "PerformanceScore"
 
+
 def transformed_name(key):
     """Renaming transformed features"""
     return key + "_xf"
@@ -35,11 +36,11 @@ def transformed_name(key):
 def convert_num_to_one_hot(label_tensor, num_labels=4):
     """
     Convert a label into a one-hot vector.
-    
+
     Args:
         label_tensor: Tensor berisi label dalam bentuk angka (0, 1, 2, 3)
         num_labels: Jumlah unik kelas (default: 4)
-    
+
     Returns:
         One-hot encoded tensor dengan shape [-1, num_labels]
     """

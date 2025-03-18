@@ -9,7 +9,7 @@ from tfx.orchestration.beam.beam_dag_runner import BeamDagRunner
 PIPELINE_NAME = "wahyuazizi-pipeline"
 
 # Pipeline inputs
-DATA_ROOT = "data"
+DATA_ROOT = "data/cleaned"
 TRANSFORM_MODULE_FILE = "modules/employee_performance_transform.py"
 TRAINER_MODULE_FILE = "modules/employee_performance_trainer.py"
 TUNER_MODULE_FILE = "modules/employee_performance_tuner.py"
@@ -21,6 +21,7 @@ OUTPUT_BASE = "output"
 serving_model_dir = os.path.join(OUTPUT_BASE, "serving_model")
 pipeline_root = os.path.join(OUTPUT_BASE, PIPELINE_NAME)
 metadata_path = os.path.join(pipeline_root, "metadata.sqlite")
+
 
 def init_local_pipeline(
         components, pipeline_root: Text
@@ -43,6 +44,7 @@ def init_local_pipeline(
         ),
         eam_pipeline_args=beam_args
     )
+
 
 if __name__ == "__main__":
     logging.set_verbosity(logging.INFO)
